@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  div#wrapper
+   p.highlight i m ninja
+
+
+   //a(href="/about", ) About us
+   //img(src="", alt="sabarish")
+  - obj = ["javascript", "ninjaleonardo"]
+  - obj1 = function() { return "ninja"}
+  - obj2 = { name: "sabarish", age: "26"}
+  ul
+    li #{obj2.name}
+    li #{obj1()}
+    li #{obj[1]}
