@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+//app.use(app.router);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -31,6 +31,8 @@ app.get('/', (req, res) => {
 res.render('index');
 
 })
+
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

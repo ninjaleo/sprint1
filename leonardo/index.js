@@ -218,6 +218,15 @@ app.put('/ninja/course/:id', (req, res) => {
 
 });
 
+app.get('/user/html', (req,res) => {
+
+    var msg = [
+      "<h1> Hi Ninja Warriors</h1>",
+      "<p> Welcome to express session</p>",
+      "<b> thanks</b>"
+    ].join("");
+    res.send(msg);
+  });
 
 //function to reuse the validation
 
