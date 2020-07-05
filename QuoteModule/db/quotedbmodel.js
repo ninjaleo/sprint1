@@ -1,20 +1,22 @@
 const mongoose = require("mongoose");
-
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const QuoteSchema = new mongoose.Schema({
-   quoteId: Number ,
+  //quoteId: Number ,
   userEmail: String,
   annualIncome: Number,
   principal: Number,
   interestRate: Number,
-  tenureinYears: Number,
+  tenure: Number,
   monthlyEMI: Number,
   totalInterest: Number,
   totalAmountPayable: Number,
   createdDate:{ type: Date, default: Date.now }
 });
 
+QuoteSchema.plugin(AutoIncrement,{inc_field: 'quoteId'})
 const quote = mongoose.model("quote", QuoteSchema);
+
 mongoose.set('useCreateIndex', true);
 mongoose.connect("mongodb+srv://ninjaleo:ninjaleo@ninjaleo.slc2s.gcp.mongodb.net/leosales?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true });
 

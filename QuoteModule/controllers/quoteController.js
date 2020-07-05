@@ -1,24 +1,21 @@
 const { quoteservice } = require('../services')
 
-const { saveQuote } = quoteservice
-const { getQuoteInfo } = quoteservice
+const { saveQuote } = quoteservice;
 
-const saveQuote = async (req, res, next) => {
-    try {
-        console.log("inside")
-        console.log(req.body)
-        var quoteInfo = JSON.stringify(req.body);   
-        var quoteinfoSaved = await saveQuote(quoteInfo);
-        res.send(quoteinfoSaved);
-    } catch (e) {
-        console.log("error is:" + e);
-    }
+const saveQuoteRequest = async (req, res, next) => {
+  try {
+    console.log("Inside Controller:")
+    var quoteinfoSaved = await saveQuote(req.body);
+    res.send(quoteinfoSaved);
+  } catch (e) {
+    console.log("error is:" + e);
+  }
 }
 
 
-const getQuoteInfo = async (req, res, next) => {
+const getQuotes = async (req, res, next) => {
   const { email } = req.body;
-  if (email == null ) {
+  if (email == null) {
     res.sendStatus(401);
   }
   else {
@@ -35,6 +32,6 @@ const getQuoteInfo = async (req, res, next) => {
 
 
 module.exports = {
-    saveQuote,
-    getQuoteInfo
+  saveQuoteRequest,
+  getQuotes
 }

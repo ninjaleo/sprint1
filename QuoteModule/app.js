@@ -15,6 +15,8 @@ app.use(function (req, res, next) {
 
 app.post('/login', routes)
 app.post('/signup', routes)
+app.post('/getQuote', routes)
+app.get('/getQuotes', routes)
 
 app.get("/", async (request, response) => {
     try {

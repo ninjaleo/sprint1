@@ -1,29 +1,13 @@
 const { saveQuoteDetails } = require('../db')
 const { retrieveQuoteDetails } = require('../db')
+const { quoteutil } = require('../utils')
 
 const saveQuote = async (quoteInfo) => {
     try {
-
+        console.log("Inside Service:"+JSON.stringify(quoteInfo));
         var interestRate = 12.5;
-        const quoterequest = {
-            "userEmail": quoteInfo.userEmail,
-            "annualIncome": quoteInfo.annualIncome,
-            "loanAmount": quoteInfo.loanAmount,
-            "interestRate": interestRate,
-            "tenure": quoteInfo.tenure
-        }
-        var calculatedEMI = EMIDetails(quoteInfo.loanAmount,interestRate,quoteInfo.tenure);
-        const quoterequest = {
-            "userEmail": quoteInfo.userEmail,
-            "annualIncome": quoteInfo.annualIncome,
-            "loanAmount": quoteInfo.loanAmount,
-            "interestRate": interestRate,
-            "tenure": quoteInfo.tenure,            
-            "loanEMI": calculatedEMI.loanEMI,
-            "totalAmountPayable": calculatedEMI.totalAmountPayabale,
-            "totalInterest": calculatedEMI.totalInterestPayable};
-        
-        var quoteinfoSaved = await saveQuoteDetails(quoterequest);    
+        var calculateQuoteInfo = quoteutil.calculatedQuoteInfo(quoteInfo,interestRate);
+        var quoteinfoSaved = await saveQuoteDetails(calculateQuoteInfo);    
         return quoteinfoSaved;
     } catch (e) {
         console.log("Error:" + e.message)
@@ -42,25 +26,6 @@ const getQuoteInfo = async (email) => {
   }
 }
 
-const EMIDetails = (principal,rate,tenure) => {
-
-    var interest;   
-    var period;
-    var result;
-    interest = rate / (12*100);
-    period  = tenure * 12;
-    var emi;
-    var totalAmountPayabale;
-    var totalInterestPayable;
-    emi = (principal * interest *  Math.pow(1+ interest,period)) / (Math.pow(1+interest,period)-1);
-    totalAmountPayabale = emi * period;
-    totalInterestPayable = totalAmountPayabale - principal;
-    result = {
-        "loadEMI": emi,
-        "totalAmountPayable": totalAmountPayabale,
-        "totalInterest": totalInterestPayable};
-        return result;
-}
 
 module.exports = {
     saveQuote,
